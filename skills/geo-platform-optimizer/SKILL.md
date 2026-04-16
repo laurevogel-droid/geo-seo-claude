@@ -217,6 +217,86 @@ Only **11% of domains** are cited by BOTH ChatGPT and Google AI Overviews for th
 
 ---
 
+---
+
+## Platform 6: Claude (Anthropic)
+
+### How Claude Selects Sources
+- Claude uses **ClaudeBot** for web crawling and **claude.ai web search** for real-time queries
+- Strongly favors sites with a **`llms.txt` file** at the root — this is the highest-signal optimization specifically for Claude
+- Prioritizes content that is **structurally clean and self-contained** — passages that answer a question without requiring surrounding context
+- Heavy weight on **E-E-A-T signals** : named authors, credentials, first-hand experience
+- Prefers **server-side rendered content** (Claude's crawler does limited JS execution)
+- Respects `ClaudeBot` directives in `robots.txt` explicitly
+- Citation behavior: Claude tends to cite **primary sources** and avoids aggregators
+
+### Optimization Checklist
+
+1. **llms.txt file**: Create and maintain `/llms.txt` at the domain root with structured plain-text description of the site: name, description, key pages with URLs, NAP if local business. This is Claude-specific and high-impact.
+2. **ClaudeBot access**: Verify `ClaudeBot` is not blocked in `robots.txt`. Add an explicit `Allow: /` rule for ClaudeBot.
+3. **Self-contained answer blocks**: Each paragraph should answer one question completely without requiring context. Target 80-150 words per block. Open with the key claim.
+4. **Named authorship**: Add visible author names, bios, and credentials to all content pages. Claude weights named expertise heavily.
+5. **Structured headings as questions**: Use H2/H3 headings in question format ("Quels sont les horaires ?", "Comment commander ?") — Claude extracts these as answer targets.
+6. **Schema.org markup**: Implement JSON-LD for the primary entity type (Restaurant, Organization, Article, etc.). Claude reads structured data to validate factual claims.
+7. **Factual density**: Include specific numbers, dates, addresses, and measurable claims. Claude prefers high-specificity content over general descriptions.
+8. **Consistent NAP/entity data**: Name, address, phone, and key facts must match across the page, schema markup, and llms.txt. Inconsistencies reduce citation confidence.
+9. **No AI-detection red flags**: Avoid generic padding, repetitive restatement, and hedging overload — Claude is trained to recognize low-quality generated content and deprioritizes it.
+10. **HTTPS + accessibility**: Claude's crawler respects security signals. HTTPS, fast load times, and accessible HTML structure improve crawl completeness.
+
+### Scoring Rubric (0-100)
+
+| Criterion | Points | How to Score |
+|---|---|---|
+| llms.txt present and well-formed | 25 | 25 if complete, 10 if minimal, 0 if absent |
+| ClaudeBot explicitly allowed in robots.txt | 10 | 10 if explicit Allow, 5 if allowed by wildcard, 0 if blocked |
+| Self-contained answer blocks (80-150 words) | 15 | 3 pts per qualifying block, max 15 |
+| Named author with credentials | 10 | 10 if full bio, 5 if name only, 0 if absent |
+| Schema.org JSON-LD for primary entity | 15 | 15 if complete, 8 if partial, 0 if absent |
+| Question-format H2/H3 headings | 10 | 2 pts per question heading, max 10 |
+| Factual density (numbers, dates, specifics) | 10 | 10 if high, 5 if moderate, 0 if generic |
+| HTTPS + SSR (no JS-only content) | 5 | 5 if both, 2 if HTTPS only, 0 if issues |
+
+---
+
+## Platform 7: Mistral (Le Chat / La Plateforme)
+
+### How Mistral Selects Sources
+- Mistral Le Chat uses **web search** powered by a mix of indexes (Brave Search API + own crawling)
+- Strong bias toward **French and European sources** — highest relevance for .fr domains and French-language content
+- Favors **official, primary sources** : documentation officielle, sites gouvernementaux, pages entreprises, annuaires reconnus
+- Mistral's crawler (**MistralBot**, encore en déploiement) respecte les robots.txt standards
+- Cite préférentiellement les sources avec **contenu structuré et daté** (dates de publication visibles)
+- Sensible au **contexte géographique** : pour une requête locale française, privilégie les sources françaises vérifiables (Pages Jaunes, Yelp FR, TripAdvisor FR, Google Maps FR)
+- Particulièrement influencé par les **annuaires professionnels français** : Societe.com, Verif.com, Infogreffe, SIRET visible
+
+### Optimization Checklist
+
+1. **Présence sur les annuaires français** : S'inscrire sur Pages Jaunes, Societe.com (fiche SIRET visible), Kompass, Yelp France. Mistral indexe ces sources comme validation d'entité pour les requêtes locales françaises.
+2. **SIRET visible sur le site** : Afficher le numéro SIRET/SIREN dans les mentions légales ET dans le schema.org `Organization`. Mistral croise ces données avec les registres officiels.
+3. **Contenu en français natif** : Éviter les traductions automatiques. Mistral pénalise les contenus qui semblent traduits. Le français courant et idiomatique est fortement privilégié.
+4. **Dates de publication visibles** : Afficher `Publié le` et `Mis à jour le` sur toutes les pages éditoriales. Mistral privilégie la fraîcheur de façon agressive.
+5. **Sources officielles citées** : Lier vers des sources françaises reconnues (service-public.fr, legifrance.fr pour le légal, insee.fr pour les données). Mistral poids les sites qui citent des autorités françaises.
+6. **Google Business Profile complet** : Mistral's web search intègre les données Google Maps pour les requêtes locales françaises. GBP complet = forte visibilité dans Le Chat pour les requêtes "restaurant japonais Trets".
+7. **Contenu question/réponse en français** : Structurer des sections FAQ en français naturel avec les formulations exactes des requêtes utilisateurs ("Où se trouve...", "Est-ce que... livre à domicile ?", "Quels sont les horaires de...").
+8. **Schema.org en français** : Les valeurs textuelles dans les schémas JSON-LD (description, servesCuisine, addressRegion) doivent être en français. Mistral les lit et les utilise pour les réponses.
+9. **TripAdvisor et TheFork FR** : Ces deux plateformes sont fortement indexées par Mistral pour les requêtes restauration en France. Une fiche complète avec avis est un signal de validation critique.
+10. **robots.txt ouvert** : S'assurer qu'aucun wildcard ne bloque MistralBot. Ajouter une règle explicite `User-agent: MistralBot` + `Allow: /` dès que le crawler sera en production.
+
+### Scoring Rubric (0-100)
+
+| Criterion | Points | How to Score |
+|---|---|---|
+| Annuaires français (Pages Jaunes, Societe.com, Kompass) | 20 | 7 pts par annuaire confirmé, max 20 |
+| SIRET visible site + schema.org | 10 | 10 si les deux, 5 si l'un des deux, 0 si absent |
+| Google Business Profile complet (photos, horaires, avis) | 20 | 20 si complet, 10 si basique, 0 si absent |
+| TripAdvisor / TheFork présence FR | 15 | 15 si les deux, 8 si l'un, 0 si absent |
+| Dates publication visibles sur pages éditoriales | 10 | 10 si systématiques, 5 si partielles, 0 si absentes |
+| Contenu FAQ en français natif | 10 | 2 pts par Q/R bien formée, max 10 |
+| Schema.org valeurs en français | 5 | 5 si complet, 2 si partiel, 0 si absent |
+| MistralBot non bloqué en robots.txt | 10 | 10 si Allow explicite, 5 si wildcard permissif, 0 si bloqué |
+
+--
+
 ## Cross-Platform Summary
 
 ### Universal Optimization Actions (help ALL platforms)
