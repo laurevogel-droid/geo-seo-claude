@@ -158,7 +158,64 @@ Bing Copilot (Microsoft Copilot) relies on the Bing index and has its own optimi
 - Microsoft ecosystem: 20 points
 - Technical signals: 20 points
 
-### Step 6: Cross-Platform Comparison
+### Step 6: Claude (Anthropic) Optimization
+
+Analyze for:
+
+**llms.txt & Crawler Access:**
+- Does `/llms.txt` exist at the domain root? Is it well-formed?
+- Is `ClaudeBot` explicitly allowed in `robots.txt`?
+- Is content server-side rendered (visible without JS)?
+
+**Content Structure for Claude:**
+- Self-contained answer blocks (80-150 words, one idea per block)
+- Question-format H2/H3 headings
+- Named authorship with visible credentials
+- High factual density (numbers, dates, specific claims)
+
+**Entity Signals:**
+- Schema.org JSON-LD for primary entity type
+- Consistent NAP/key facts across page, schema, and llms.txt
+
+**Score (0-100):**
+- llms.txt presence and quality: 25 points
+- ClaudeBot crawler access: 10 points
+- Self-contained answer blocks: 15 points
+- Named authorship: 10 points
+- Schema.org completeness: 15 points
+- Question headings + factual density: 15 points
+- HTTPS + SSR: 10 points
+
+### Step 7: Mistral (Le Chat) Optimization
+
+Analyze for:
+
+**Annuaires et registres français:**
+- Présence sur Pages Jaunes, Societe.com, Kompass ?
+- SIRET visible sur le site ET dans le schema.org ?
+- TripAdvisor FR et TheFork présents ?
+
+**Contenu et fraîcheur:**
+- Dates de publication visibles sur les pages éditoriales ?
+- Contenu en français natif (non traduit) ?
+- FAQ en français avec formulations de requêtes naturelles ?
+
+**Signaux locaux France:**
+- Google Business Profile complet ?
+- Schema.org avec valeurs textuelles en français ?
+- Sources officielles françaises citées ?
+
+**Score (0-100):**
+- Annuaires français confirmés: 20 points
+- SIRET + schema.org: 10 points
+- Google Business Profile: 20 points
+- TripAdvisor / TheFork: 15 points
+- Dates publication + fraîcheur: 10 points
+- FAQ français natif: 10 points
+- robots.txt ouvert + schema FR: 15 points
+
+
+### Step 8: Cross-Platform Comparison
 
 After scoring all five platforms individually:
 
@@ -168,7 +225,7 @@ After scoring all five platforms individually:
 4. Identify **cross-platform synergies** (actions that improve multiple platforms simultaneously, e.g., Wikipedia presence helps ChatGPT, Perplexity, and Gemini).
 5. Identify **platform-specific quick wins** (low-effort actions with high impact for a single platform).
 
-### Step 7: Platform-Specific Action Items
+### Step 9: Platform-Specific Action Items
 
 For each platform, provide 2-3 prioritized, specific action items. Actions must be concrete and actionable (not vague advice like "improve content quality").
 
@@ -188,6 +245,8 @@ For each platform, provide 2-3 prioritized, specific action items. Actions must 
 | Perplexity AI | [X]/100 | [Status] |
 | Google Gemini | [X]/100 | [Status] |
 | Bing Copilot | [X]/100 | [Status] |
+| Claude | [X]/100 | [Status] |
+| Mistral | [X]/100 | [Status] |
 
 **Strongest Platform:** [Name] — [Brief explanation]
 **Weakest Platform:** [Name] — [Brief explanation]
