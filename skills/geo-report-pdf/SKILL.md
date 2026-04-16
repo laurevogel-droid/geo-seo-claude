@@ -1,34 +1,34 @@
 ---
 name: geo-report-pdf
-description: Generate a professional PDF report from GEO audit data using ReportLab. Creates a polished, client-ready PDF with score gauges, bar charts, platform readiness visualizations, color-coded tables, and prioritized action plans.
+description: Générer un rapport PDF professionnel à partir des données d'audit GEO avec ReportLab. Produit un PDF soigné et prêt pour le client avec jauges de score, graphiques en barres, visualisations de maturité par plateforme, tableaux en couleur et plan d'action priorisé.
 version: 1.0.0
 author: geo-seo-claude
 tags: [geo, pdf, report, client-deliverable, professional]
 allowed-tools: Read, Grep, Glob, Bash, WebFetch, Write
 ---
 
-# GEO PDF Report Generator
+# Générateur de rapport GEO au format PDF
 
-## Purpose
+## Objectif
 
-This skill generates a professional, visually polished PDF report from GEO audit data. The PDF includes score gauges, bar charts, platform readiness visualizations, color-coded tables, and a prioritized action plan — ready to deliver directly to clients.
+Cette compétence génère un rapport PDF professionnel et visuellement soigné à partir des données d'audit GEO. Le PDF inclut des jauges de score, des graphiques en barres, des visualisations de maturité par plateforme IA, des tableaux en couleur et un plan d'action priorisé — prêt à être livré directement aux clients.
 
-## Prerequisites
+## Prérequis
 
-- **ReportLab** must be installed: `pip install reportlab`
-- The PDF generation script is located at: `~/.claude/skills/geo/scripts/generate_pdf_report.py`
-- Run a full GEO audit first (using `/geo-audit`) to have data to include in the report
+- **ReportLab** doit être installé : `pip install reportlab`
+- Le script de génération PDF se trouve à : `~/.claude/skills/geo/scripts/generate_pdf_report.py`
+- Exécuter un audit GEO complet au préalable (via `/geo-audit`) afin de disposer des données à inclure dans le rapport
 
-## How to Generate a PDF Report
+## Comment générer un rapport PDF
 
-### Step 1: Collect Audit Data
+### Étape 1 : Collecter les données d'audit
 
-After running a full `/geo-audit`, collect all scores, findings, and recommendations into a JSON structure. The JSON data must follow this schema:
+Après avoir exécuté un `/geo-audit` complet, rassembler tous les scores, constats et recommandations dans une structure JSON. Les données JSON doivent respecter ce schéma :
 
 ```json
 {
-    "url": "https://example.com",
-    "brand_name": "Example Company",
+    "url": "https://exemple.com",
+    "brand_name": "Nom de l'entreprise",
     "date": "2026-02-18",
     "geo_score": 65,
     "scores": {
@@ -46,119 +46,119 @@ After running a full `/geo-audit`, collect all scores, findings, and recommendat
         "Gemini": 60,
         "Bing Copilot": 50
     },
-    "executive_summary": "A 4-6 sentence summary of the audit findings...",
+    "executive_summary": "Synthèse en 4 à 6 phrases des principaux constats de l'audit...",
     "findings": [
         {
             "severity": "critical",
-            "title": "Finding Title",
-            "description": "Description of the finding and its impact."
+            "title": "Titre du constat",
+            "description": "Description du constat et de son impact."
         }
     ],
     "quick_wins": [
-        "Action item 1",
-        "Action item 2"
+        "Action prioritaire 1",
+        "Action prioritaire 2"
     ],
     "medium_term": [
-        "Action item 1",
-        "Action item 2"
+        "Action moyen terme 1",
+        "Action moyen terme 2"
     ],
     "strategic": [
-        "Action item 1",
-        "Action item 2"
+        "Initiative stratégique 1",
+        "Initiative stratégique 2"
     ],
     "crawler_access": {
-        "GPTBot": {"platform": "ChatGPT", "status": "Allowed", "recommendation": "Keep allowed"},
-        "ClaudeBot": {"platform": "Claude", "status": "Blocked", "recommendation": "Unblock for visibility"}
+        "GPTBot": {"platform": "ChatGPT", "status": "Autorisé", "recommendation": "Maintenir l'accès"},
+        "ClaudeBot": {"platform": "Claude", "status": "Bloqué", "recommendation": "Débloquer pour améliorer la visibilité"}
     }
 }
 ```
 
-### Step 2: Write JSON Data to a Temp File
+### Étape 2 : Écrire les données JSON dans un fichier temporaire
 
-Write the collected audit data to a temporary JSON file:
+Écrire les données d'audit collectées dans un fichier JSON temporaire :
 
 ```bash
-# Write audit data to temp file
+# Écriture des données d'audit dans un fichier temporaire
 cat > /tmp/geo-audit-data.json << 'EOF'
-{ ... audit JSON data ... }
+{ ... données JSON de l'audit ... }
 EOF
 ```
 
-### Step 3: Generate the PDF
+### Étape 3 : Générer le PDF
 
-Run the PDF generation script:
+Exécuter le script de génération PDF :
 
 ```bash
-python3 ~/.claude/skills/geo/scripts/generate_pdf_report.py /tmp/geo-audit-data.json GEO-REPORT-[brand].pdf
+python3 ~/.claude/skills/geo/scripts/generate_pdf_report.py /tmp/geo-audit-data.json GEO-RAPPORT-[marque].pdf
 ```
 
-The script will produce a professional PDF report with:
-- **Cover Page** — Brand name, URL, date, overall GEO score with visual gauge
-- **Executive Summary** — Key findings and top recommendations
-- **Score Breakdown** — Table and bar chart of all 6 scoring categories
-- **AI Platform Readiness** — Visual horizontal bar chart per platform with scores
-- **AI Crawler Access** — Color-coded table (green=allowed, red=blocked)
-- **Key Findings** — Severity-coded findings list (critical/high/medium/low)
-- **Prioritized Action Plan** — Quick wins, medium-term, and strategic initiatives
-- **Appendix** — Methodology, data sources, and glossary
+Le script produira un rapport PDF professionnel comprenant :
+- **Page de couverture** — Nom de la marque, URL, date, score GEO global avec jauge visuelle
+- **Synthèse exécutive** — Principaux constats et recommandations prioritaires
+- **Détail des scores** — Tableau et graphique en barres des 6 catégories de notation
+- **Maturité par plateforme IA** — Graphique horizontal par plateforme avec scores
+- **Accès des robots IA** — Tableau en couleur (vert = autorisé, rouge = bloqué)
+- **Principaux constats** — Liste des constats classés par sévérité (critique/élevé/moyen/faible)
+- **Plan d'action priorisé** — Actions rapides, moyen terme et initiatives stratégiques
+- **Annexe** — Méthodologie, sources de données et glossaire
 
-### Step 4: Return the PDF Path
+### Étape 4 : Retourner le chemin du PDF
 
-After generation, tell the user where the PDF was saved and its file size.
+Après la génération, indiquer à l'utilisateur l'emplacement du PDF et sa taille.
 
-## Complete Workflow Example
+## Exemple de workflow complet
 
-When the user runs this skill, follow this exact sequence:
+Lors de l'exécution de cette compétence, suivre cette séquence exacte :
 
-1. **Check for existing audit data** — Look for recent GEO audit reports in the current directory:
+1. **Vérifier l'existence de données d'audit** — Rechercher les rapports d'audit GEO récents dans le répertoire courant :
    - `GEO-CLIENT-REPORT.md`
    - `GEO-AUDIT-REPORT.md`
-   - Or any `GEO-*.md` files from a recent audit
+   - Ou tout fichier `GEO-*.md` issu d'un audit récent
 
-2. **If no audit data exists** — Tell the user to run `/geo-audit <url>` first, then come back for the PDF.
+2. **Si aucune donnée d'audit n'existe** — Demander à l'utilisateur d'exécuter `/geo-audit <url>` en premier, puis de revenir pour générer le PDF.
 
-3. **If audit data exists** — Parse the markdown report to extract:
-   - Overall GEO score
-   - Category scores (citability, brand authority, content/E-E-A-T, technical, schema, platform)
-   - Platform readiness scores (Google AIO, ChatGPT, Perplexity, Gemini, Bing Copilot)
-   - AI crawler access status
-   - Key findings with severity levels
-   - Quick wins, medium-term, and strategic action items
-   - Executive summary
+3. **Si des données d'audit existent** — Analyser le rapport markdown pour en extraire :
+   - Le score GEO global
+   - Les scores par catégorie (citabilité, autorité de marque, contenu/E-E-A-T, technique, schémas, plateformes)
+   - Les scores de maturité par plateforme (Google AIO, ChatGPT, Perplexity, Gemini, Bing Copilot)
+   - Le statut d'accès des robots IA
+   - Les principaux constats avec leurs niveaux de sévérité
+   - Les actions rapides, moyen terme et initiatives stratégiques
+   - La synthèse exécutive
 
-4. **Build the JSON** — Structure all data into the JSON schema shown above.
+4. **Construire le JSON** — Structurer toutes les données selon le schéma JSON présenté ci-dessus.
 
-5. **Write JSON to temp file** — Save to `/tmp/geo-audit-data.json`
+5. **Écrire le JSON dans un fichier temporaire** — Sauvegarder dans `/tmp/geo-audit-data.json`
 
-6. **Run the PDF generator**:
+6. **Exécuter le générateur PDF** :
    ```bash
-   python3 ~/.claude/skills/geo/scripts/generate_pdf_report.py /tmp/geo-audit-data.json "GEO-REPORT-[brand_name].pdf"
+   python3 ~/.claude/skills/geo/scripts/generate_pdf_report.py /tmp/geo-audit-data.json "GEO-RAPPORT-[nom_marque].pdf"
    ```
 
-7. **Report success** — Tell the user the PDF was generated, its location, and file size.
+7. **Confirmer la réussite** — Indiquer à l'utilisateur que le PDF a été généré, son emplacement et sa taille.
 
-## If the User Provides a URL
+## Si l'utilisateur fournit une URL
 
-If the user runs `/geo-report-pdf https://example.com` with a URL:
-1. First run a full audit: invoke the `geo-audit` skill for that URL
-2. Then collect all the audit data from the generated report files
-3. Generate the PDF as described above
+Si l'utilisateur exécute `/geo-report-pdf https://exemple.com` avec une URL :
+1. Lancer d'abord un audit complet : invoquer la compétence `geo-audit` pour cette URL
+2. Collecter ensuite toutes les données d'audit depuis les fichiers de rapport générés
+3. Générer le PDF comme décrit ci-dessus
 
-## Parsing Markdown Audit Data
+## Extraction des données depuis un rapport markdown
 
-When extracting data from existing GEO markdown reports, look for these patterns:
+Lors de l'extraction de données depuis des rapports GEO au format markdown, rechercher ces patterns :
 
-- **GEO Score**: Look for "GEO Score: XX/100" or "Overall: XX/100" or "GEO Readiness Score: XX"
-- **Category Scores**: Look for score tables with columns like "Component | Score | Weight"
-- **Platform Scores**: Look for tables with "Google AI Overviews", "ChatGPT", "Perplexity", etc.
-- **Crawler Status**: Look for tables with "Allowed" or "Blocked" status for crawlers like GPTBot, ClaudeBot
-- **Findings**: Look for sections titled "Key Findings", "Critical Issues", "Recommendations"
-- **Action Items**: Look for sections titled "Quick Wins", "Action Plan", "Recommendations"
+- **Score GEO** : Rechercher « Score GEO : XX/100 » ou « Total : XX/100 » ou « Score GEO : XX »
+- **Scores par catégorie** : Rechercher des tableaux avec des colonnes du type « Composante | Score | Pondération »
+- **Scores par plateforme** : Rechercher des tableaux mentionnant « Google AI Overviews », « ChatGPT », « Perplexity », etc.
+- **Statut des robots** : Rechercher des tableaux avec les statuts « Autorisé » ou « Bloqué » pour des robots comme GPTBot, ClaudeBot
+- **Constats** : Rechercher les sections intitulées « Principaux constats », « Problèmes critiques », « Recommandations »
+- **Actions** : Rechercher les sections intitulées « Actions rapides », « Plan d'action », « Recommandations »
 
 ## Notes
 
-- If ReportLab is not installed, run: `pip install reportlab`
-- The PDF is designed for US Letter size (8.5" x 11")
-- Color palette: Navy primary (#1a1a2e), Blue accent (#0f3460), Coral highlight (#e94560), Green success (#00b894)
-- Each page has a header line, page numbers, "Confidential" watermark, and generation date
-- Score gauges use traffic-light colors: green (80+), blue (60-79), yellow (40-59), red (below 40)
+- Si ReportLab n'est pas installé, exécuter : `pip install reportlab`
+- Le PDF est conçu au format Lettre US (8,5" x 11")
+- Palette de couleurs : bleu marine principal (#1a1a2e), accent bleu (#0f3460), accent corail (#e94560), vert succès (#00b894)
+- Chaque page comporte un filet d'en-tête, une numérotation des pages, un filigrane « Confidentiel » et la date de génération
+- Les jauges de score utilisent les couleurs du feu tricolore : vert (80+), bleu (60-79), jaune (40-59), rouge (moins de 40)
