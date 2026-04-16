@@ -158,7 +158,7 @@ Lors de l'extraction de données depuis des rapports GEO au format markdown, rec
 ## Notes
 
 - Si ReportLab n'est pas installé, exécuter : `pip install reportlab`
-- Le PDF est conçu au format Lettre US (8,5" x 11")
+- Le PDF est conçu au format A4 (21 cm x 29,7 cm)
 - Palette de couleurs : bleu marine principal (#1a1a2e), accent bleu (#0f3460), accent corail (#e94560), vert succès (#00b894)
 - Chaque page comporte un filet d'en-tête, une numérotation des pages, un filigrane « Confidentiel » et la date de génération
 - Les jauges de score utilisent les couleurs du feu tricolore : vert (80+), bleu (60-79), jaune (40-59), rouge (moins de 40)
