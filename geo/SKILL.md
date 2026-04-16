@@ -94,7 +94,7 @@ Launch these 5 subagents simultaneously:
 | Content Quality & E-E-A-T | 20% | Expertise signals, original data, author credentials |
 | Technical Foundations | 15% | SSR, Core Web Vitals, crawlability, mobile, security |
 | Structured Data | 10% | Schema completeness, JSON-LD validation, rich result eligibility |
-| Platform Optimization | 10% | Platform-specific readiness (Google AIO, ChatGPT, Perplexity) |
+| Platform Optimization | 10% | Platform-specific readiness (Google AIO, ChatGPT, Perplexity, Claude, Mistral) |
 
 ---
 
